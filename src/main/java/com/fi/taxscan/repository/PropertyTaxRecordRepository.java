@@ -6,6 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PropertyTaxRecordRepository extends JpaRepository<PropertyTaxRecord, Long> {
-    List<PropertyTaxRecord> findByCounty(String county);
+    List<PropertyTaxRecord> findByCountyIgnoreCase(String county);
     Optional<PropertyTaxRecord> findByAccountNumber(String accountNumber);
 }
