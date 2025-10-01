@@ -129,7 +129,7 @@ public class DallasTaxRecordScraper implements TaxRecordScraper {
             record.setLegalDescription(legalDescBuilder.toString().trim());
         }
 
-        // Helper method to parse single-line values
+        // Helper method to parse single-line values with field mapping for consistency
         Map<String, String> fieldMappings = new HashMap<>();
         fieldMappings.put("taxLevy2024", "Current Tax Levy:");
         fieldMappings.put("amountDue2024", "Current Amount Due:");
@@ -145,11 +145,7 @@ public class DallasTaxRecordScraper implements TaxRecordScraper {
         for (Map.Entry<String, String> entry : fieldMappings.entrySet()) {
             String field = entry.getKey();
             String label = entry.getValue();
-            String selector = field.contains("totalMarketValue") || field.contains("landValue") ||
-                    field.contains("improvementValue") || field.contains("cappedValue") ||
-                    field.contains("agriculturalValue") || field.contains("exemptions")
-                    ? "td[width=47%] h3 b:contains(" + label + ")"
-                    : "td[width=53%] h3 b:contains(" + label + ")";
+            String selector = "td[width=53%] h3 b:contains(" + label + "), td[width=47%] h3 b:contains(" + label + ")"; // Flexible selector
             Elements labelElements = doc.select(selector);
             if (!labelElements.isEmpty()) {
                 Element bElement = labelElements.first();
@@ -163,9 +159,10 @@ public class DallasTaxRecordScraper implements TaxRecordScraper {
                             } else {
                                 String cleanText = text.replaceAll("[^0-9.]", "");
                                 if (!cleanText.isEmpty()) {
+                                    BigDecimal value = new BigDecimal(cleanText);
                                     record.getClass()
                                             .getMethod("set" + field.substring(0, 1).toUpperCase() + field.substring(1), BigDecimal.class)
-                                            .invoke(record, new BigDecimal(cleanText));
+                                            .invoke(record, value);
                                 }
                             }
                         } catch (Exception e) {

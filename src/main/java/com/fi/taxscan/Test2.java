@@ -15,7 +15,7 @@ public class Test2 {
     public static void main(String[] args) {
         try {
 
-            List<String> cans = loadCansFromFile("cans.txt");
+            List<String> cans = loadCansFromFile("bexar.txt");
             cans.stream().forEach(can -> {
                 Document doc = null;
                 try {

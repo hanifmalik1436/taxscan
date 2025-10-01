@@ -32,11 +32,11 @@ public class PropertyTaxRecord {
     @CsvBindByName(column = "legalDescription")
     private String legalDescription;
 
-    @Column
+    @Column(name = "tax_levy_2024")
     @CsvBindByName(column = "taxLevy2024")
     private BigDecimal taxLevy2024;
 
-    @Column
+    @Column(name = "amount_due_2024")
     @CsvBindByName(column = "amountDue2024")
     private BigDecimal amountDue2024;
 

@@ -22,7 +22,7 @@ public class OptimizedPropertyScraper {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         // Load list of CANs (replace with your source: e.g., read from DB or file)
-        List<String> cans = loadCansFromFile("cans.txt"); // Assume file with one CAN per line
+        List<String> cans = loadCansFromFile("bexar.txt"); // Assume file with one CAN per line
 
         // Output CSV file
         String outputFile = "property_data.csv";
